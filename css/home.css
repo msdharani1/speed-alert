@@ -6,9 +6,9 @@
 body{
     width: 100%;
     background: linear-gradient(to top, rgba(0,0,0,0.5)50%,rgba(0,0,0,0.5)50%),url("/assets/bk.gif");
-    background-position: cover;
+    background-position: center right;
     background-repeat: no-repeat;
-    background-size:contain;
+    background-size:cover;
     /* background-color: #c4dbf6; */
     position: relative;
     height: 100vh;
@@ -53,9 +53,8 @@ body{
     width: 100%;
 }
 .heading{
-    position: relative;
-    top: 230px;
-    left: 50px;
+    margin-top: 200px;
+    margin-left: 50px;
 }
 .heading h1{
     color: #fff;
@@ -75,7 +74,38 @@ body{
 }
 
 .gets-btn{
-    position: relative;
-    top: 280px;
-    left: 120px;
+    margin-top: 50px;
+    margin-left: 50px;
+}
+
+/* responsive */
+
+@media only screen and (max-width: 600px) {
+    body{
+        background: linear-gradient(to top, rgba(0,0,0,0.5)50%,rgba(0,0,0,0.5)50%),url("/assets/bk-mobile.gif");
+        background-size: cover; /* or contain, depending on your preference */
+        background-repeat: no-repeat;
+        background-position: center center; /* Center both horizontally and vertically */
+    }
+    .nav{
+        width: 100%;
+    }
+    .heading{
+        margin-top: 100px;
+        margin-left: 0;
+    }
+    .heading h1 {
+        font-size: 55px;
+        text-align: center;
+    }
+    .gets-btn{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 50px;
+        margin-left: 0px;
+    }
+    .gets-btn a{
+        font-size: 14px;
+    }
 }
