@@ -10,6 +10,7 @@ body{
 #preview{
 	width: 100%;
 	max-height: 50vh;
+	border: 15px solid #03192c;
 }
 .speedometer{
 	width: 200px;
@@ -164,6 +165,7 @@ input{
 #dis{
 	display: none;
 }
+
 
 
 /* responsive */
