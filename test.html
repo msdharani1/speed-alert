@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .speedometer {
+            width: 200px;
+            height: 200px;
+            background: #ddd;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .speed {
+            font-size: 24px;
+            font-weight: bold;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: absolute;
+        }
+
+        #preview {
+            display: block; /* Make the video element visible */
+            width: 100%;
+            max-width: 400px; /* Adjust the maximum width as needed */
+        }
+    </style>
+    <title>Real-time Speedometer with QR Code</title>
+</head>
+<body>
+    <div class="speedometer">
+        <div class="speed">
+            <span id="speedValue">0</span>
+            <span> km/h</span>
+        </div>
+    </div>
+
+    <video id="preview"></video>
+
+    <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const speedElement = document.getElementById('speedValue');
+            let qrCodeValue = 50; // Default value, replace with your QR code value
+
+            function playSound() {
+                // Code to play the sound, for example using the Web Audio API
+                const audio = new Audio('sound.mp3');
+                audio.play();
+            }
+
+            function updateSpeed(speed) {
+                speedElement.textContent = speed.toFixed(0);
+
+                // Compare QR code value and current speed
+                if (qrCodeValue < speed) {
+                    playSound();
+                }
+            }
+
+            function scanQRCode() {
+                const scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+
+                scanner.addListener('scan', function (content) {
+                    alert('Scanned: ' + content);
+                    qrCodeValue = parseFloat(content) || 0;
+                });
+
+                Instascan.Camera.getCameras().then(function (cameras) {
+                    if (cameras.length > 0) {
+                        scanner.start(cameras[0]);
+                    } else {
+                        console.error('No cameras found.');
+                    }
+                }).catch(function (e) {
+                    console.error(e);
+                });
+            }
+
+            // Start QR code scanning
+            scanQRCode();
+
+            // Update speed every second (1000 milliseconds)
+            setInterval(function () {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function (position) {
+                        // The speed property is in meters per second, convert it to kilometers per hour
+                        const speed = position.coords.speed * 3.6 || 0;
+                        updateSpeed(speed);
+                    }, function (error) {
+                        console.error('Error getting speed:', error);
+                        speedElement.textContent = 'N/A';
+                    });
+                } else {
+                    console.error('Geolocation not supported');
+                    speedElement.textContent = 'N/A';
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

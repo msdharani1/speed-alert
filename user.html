@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>TurboSafe - Speed Alert</title>
+		<style>
+			body{
+				height: 100vh;
+				margin: 0;
+				background-color: #0089ff;
+				font-family:Arial, Helvetica, sans-serif; 
+			}
+			#preview{
+				width: 100%;
+				max-height: 50vh;
+			}
+			.speedometer{
+				width: 200px;
+				height: 200px;
+				background: #fff;
+				border-radius: 50%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				position: relative;
+			}
+			.speed{
+				font-size: 24px;
+				font-weight: bold;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				position: absolute;
+			}
+			.nav{
+				height: 70px;
+				width: 100%;
+				background-color: #fff;
+				box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1),rgba(0,0,0,0.5);
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+			.logo{
+				padding-left: 30px;
+			}
+			.logo img{
+				height: 40px;
+				width: 150px;
+			}
+			.login p{
+				text-decoration: none;
+				color: #fff;
+				background-color: #3b8beb;
+				padding: 10px;
+				border-radius: 15px;
+				cursor: pointer;
+			}
+			.login{
+				padding-right: 30px;
+			}
+			.speedometer{
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				height: 200px;
+				margin: 50px auto;
+			}
+			.circle{
+				background-color: red;
+				border-radius: 100%;
+				width: 220px;
+				height: 220px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+			.speed-container{
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				position: relative;
+				top: 50px;
+			}
+			.video-container{
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				
+			}
+			.video{
+				background-color: #000;
+				height: 300px;
+				width: 500px;
+				position: relative;
+				top: 25px;
+			}
+			.logo{
+				margin-left: 50px;
+				padding-top: 10px;
+			}
+			.content-container{
+				display: flex;
+				align-items: stretch;
+				justify-content: space-between;
+				flex-direction: row;
+			}
+			
+			
+			/* box css */
+			.box-container{
+				background-color: #c4dbf6;
+				border-radius: 20px;
+				width: 350px;
+				padding: 50px 0;
+				display: flex;
+				justify-content: space-evenly;
+				position: absolute;
+				top: 100px;
+				right: 40px;
+				flex-direction: row;
+				align-content: center;
+				align-items: center;
+			}
+			.icon{
+				position: absolute;
+				top: 7px;
+				right: 25px;
+				cursor: pointer;
+			}
+			.details{
+				display: inline;
+			}
+			
+			label{
+				color: #000;
+				font-weight: bolder;
+			}
+			h4{
+				color: #000;
+				font-weight: 100;
+				background-color: #ffffff;
+				border-radius: 10px;
+				padding-top: 8px;
+				padding-bottom: 8px;
+				padding-right: 80px;
+				padding-left: 10px;
+			}
+			input{
+				background-color: #b23850;
+				border: none;
+				padding: 10px;
+				border-radius: 5px;
+				margin-top: 10px;
+				position: relative;
+				right: 20px;
+				padding: 10px 30px;
+				color: #FFF;
+				cursor: pointer;
+			}
+			.btn-profile{
+				display: flex;
+				justify-content:center;
+				justify-items: center;
+				gap: 20px;
+			}
+			#dis{
+				display: none;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- Navbar -->
+		<div class="nav">
+		  <div class="logo">
+			 <a href="index.html"> <img src="assets/logo1.png" alt="Logo Images"></a>
+		  </div>
+		  <div class="login" onclick="show()">
+			<p onclick="show()">MS Dharani</p>
+		  </div>
+		</div>
+		<div class="video-container">
+		  <div class="video">
+			<video id="preview" playsinline></video> <!-- Add playsinline attribute -->
+		  </div>
+		</div>
+		<div class="speed-container">
+		  <div class="circle">
+			<div class="speedometer">
+			  <div class="speed">
+				<span id="speedValue">0</span>
+				<span class="speedValue">km/h</span>
+			  </div>
+			</div>
+		  </div>
+		</div>
+	  
+		<!-- popup box - modal -->
+		<div id="dis">
+		  <div class="box-container">
+			<div class="icon">
+			  <p class="close-icon" onclick="hide()"><b>X</b></p>
+			</div>
+			<div class="details">
+			  <label>Name:</label>
+			  <h4>MS Dharani</h4>
+			  <label>Email:</label>
+			  <h4>msdharani@gmail.com</h4>
+			  <label>Veh.no:</label>
+			  <h4>TN64 S8748</h4>
+			  <div class="btn-profile">
+				<input type="button" value="Edit">
+				<a href="index.html"><input type="button" value="Logout"></a>
+			  </div>
+			</div>
+		  </div>
+		</div>
+	  
+		
+		<script>
+		  document.addEventListener('DOMContentLoaded', function() {
+			const speedElement = document.getElementById('speedValue');
+			let qrCodeValue = 50; // Default speed limit
+			let lastPosition = null;
+	  
+			function playSound() {
+			  // code to play the sound
+			  const audio = new Audio("sound.mp3");
+			  audio.play();
+			}
+	  
+			function updateSpeed(speed) {
+			  speedElement.textContent = speed.toFixed(0);
+			  if (qrCodeValue < 20) {
+				playSound();
+			  }
+			}
+	  
+			function scanQRCode() {
+				const scanner = new Instascan.Scanner({
+				  video: document.getElementById('preview')
+				});
+			  
+				scanner.addListener('scan', function(content) {
+				  alert('scanned: ' + content);
+				  qrCodeValue = parseFloat(content) || 0;
+				});
+			  
+				Instascan.Camera.getCameras().then(function(cameras) {
+				  if (cameras.length > 0) {
+					scanner.start(cameras[0]);
+				  } else {
+					console.error('No camera found');
+				  }
+				}).catch(function(e) {
+				  console.error(e);
+				});
+			  }
+			  
+	  
+			// Call scanQRCode outside the event listener
+			scanQRCode();
+	  
+			// update speed
+			setInterval(function() {
+			  if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(function(position) {
+				  // The speed property is in meters per second, convert it to km/h
+				  const speed = position.coords.speed * 3.6 || 0;
+				  updateSpeed(speed);
+				}, function(error) {
+				  console.error('Error getting speed error');
+				  speedElement.textContent = 'N/A';
+				});
+			  } else {
+				console.error('Geolocation is not supported');
+				speedElement.textContent = 'N/A';
+			  }
+			}, 1000);
+		  });
+	  
+		  // modal - popup box
+		  function show() {
+			var shows = document.getElementById('dis');
+			shows.style.display = 'block';
+		  }
+	  
+		  function hide() {
+			var hides = document.getElementById('dis');
+			hides.style.display = 'none';
+		  }
+		</script>
+		<script src="js/instascan.min.js"></script>
+	  </body>
+	  </html>
