@@ -9,9 +9,9 @@ body{
     background-position: center right;
     background-repeat: no-repeat;
     background-size:cover;
+    height: 110vh;
     /* background-color: #c4dbf6; */
     position: relative;
-    height: 100vh;
     overflow-x: hidden;
 }
 .bk{
@@ -76,6 +76,18 @@ body{
 .gets-btn{
     margin-top: 50px;
     margin-left: 50px;
+}
+
+.footer{
+    background-color: rgb(33, 33, 33);
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+.footer{
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
 }
 
 /* responsive */

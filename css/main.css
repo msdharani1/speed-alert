@@ -163,6 +163,18 @@ input{
 	display: none;
 }
 
+.footer{
+    background-color: rgb(33, 33, 33);
+    position: absolute;
+    bottom: -250px;
+    width: 100%;
+}
+.footer{
+    color: #fff;
+    padding: 15px 0;
+    text-align: center;
+}
+
 
 
 /* responsive */
