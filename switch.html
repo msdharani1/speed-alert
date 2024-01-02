@@ -58,6 +58,7 @@
             const speedElement = document.getElementById('speedValue');
             let qrCodeValue = 50; // Default value, replace with your QR code value
             let currentCameraIndex = 0; // Index of the currently selected camera
+            let scanner; // Declare scanner globally
 
             function playSound() {
                 // Code to play the sound, for example using the Web Audio API
@@ -87,7 +88,7 @@
                 });
             }
 
-            const scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+            scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
 
             scanner.addListener('scan', function (content) {
                 alert('Scanned: ' + content);
